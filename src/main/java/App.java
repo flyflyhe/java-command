@@ -9,8 +9,8 @@ import redis.clients.jedis.*;
 public class App {
 
     public static void main(String[] args) throws Exception {
-        var app = new App();
-        app.testIncr();
+        Jedis redis  = RedisCon.getRedisCon();
+        redis.subscribe(new Subscriber(), "test");
     }
 
     public void testIncr() throws Exception {
@@ -60,6 +60,27 @@ public class App {
         System.out.println("length is " + arrayList.size());
     }
 }
+
+class Subscriber extends JedisPubSub {
+    public Subscriber() {
+    }
+
+    public void onMessage(String channel, String message) {
+        System.out.println(String.format("receive redis published message, channel %s, message %s", channel, message));
+    }
+
+    public void onSubscribe(String channel, int subscribedChannels) {
+        System.out.println(String.format("subscribe redis channel success, channel %s, subscribedChannels %d", 
+                channel, subscribedChannels));
+    }
+
+    public void onUnsubscribe(String channel, int subscribedChannels) {
+        System.out.println(String.format("unsubscribe redis channel, channel %s, subscribedChannels %d", 
+                channel, subscribedChannels));
+
+    }
+}
+
 
 class RedisCon {
     public static Properties parseProperties() throws Exception {
