@@ -9,9 +9,37 @@ import redis.clients.jedis.*;
 public class App {
 
     public static void main(String[] args) throws Exception {
+        var app = new App();
+        app.testIncr();
+    }
+
+    public void testIncr() throws Exception {
         Jedis redis  = RedisCon.getRedisCon();
-        redis.set("abc", "1");
-        System.out.println(redis.get("abc"));
+        var threadList = new ArrayList<Thread>();
+        Runnable runnable = new Runnable() {
+            
+            @Override
+            public void run(){
+                try {
+                    Jedis redis  = RedisCon.getRedisCon();
+                    redis.incr("incr");
+                } catch (Exception e) {
+
+                }
+            }
+        };
+
+        for(int i = 0 ; i < 100; i++) {
+            Thread thread = new Thread(runnable);
+            threadList.add(thread);
+            thread.run();
+        }
+
+        for (Thread thread : threadList) {
+            thread.join();
+        }
+
+        System.out.println(redis.get("incr"));
     }
 
     public void testThread() throws InterruptedException  {
