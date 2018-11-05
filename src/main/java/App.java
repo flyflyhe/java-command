@@ -9,9 +9,9 @@ import redis.clients.jedis.*;
 public class App {
 
     public static void main(String[] args) throws Exception {
-        Client redis  = RedisCon.getRedisCon();
+        Jedis redis  = RedisCon.getRedisCon();
         redis.set("abc", "1");
-        System.out.println();
+        System.out.println(redis.get("abc"));
     }
 
     public void testThread() throws InterruptedException  {
@@ -42,9 +42,9 @@ class RedisCon {
         return properties;
     }
 
-    public static Client getRedisCon() throws Exception {
+    public static Jedis getRedisCon() throws Exception {
         Properties properties = parseProperties();
-        Client redis = new Client(properties.getProperty("hostname"), Integer.parseInt(properties.getProperty("port")));
+        Jedis redis = new Jedis(properties.getProperty("hostname"), Integer.parseInt(properties.getProperty("port")));
         redis.auth(properties.getProperty("password"));
         redis.select(Integer.parseInt(properties.getProperty("database")));
         return redis;
