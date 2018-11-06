@@ -1,6 +1,7 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Properties;
+import java.util.*;
+import java.util.stream.*;
+
 import redis.clients.jedis.*;
 
 /*
@@ -9,8 +10,7 @@ import redis.clients.jedis.*;
 public class App {
 
     public static void main(String[] args) throws Exception {
-        Jedis redis  = RedisCon.getRedisCon();
-        redis.subscribe(new Subscriber(), "test");
+        StreamTest.wordList();
     }
 
     public void testIncr() throws Exception {
@@ -58,6 +58,23 @@ public class App {
         }
 
         System.out.println("length is " + arrayList.size());
+    }
+}
+
+
+class StreamTest
+{
+    public static void wordList() {
+        var wordList = new ArrayList<String>();
+        wordList.add("a");
+        wordList.add("b");
+        wordList.add("c");
+        List<String> output = wordList.stream().
+            map(String::toUpperCase).
+            collect(Collectors.toList());
+        for (String v : output) {
+            System.out.println(v);
+        }    
     }
 }
 
