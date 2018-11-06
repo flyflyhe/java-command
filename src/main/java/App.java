@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 import java.util.stream.*;
-
+import java.util.function.Consumer;
 import redis.clients.jedis.*;
 
 /*
@@ -10,7 +10,8 @@ import redis.clients.jedis.*;
 public class App {
 
     public static void main(String[] args) throws Exception {
-        StreamTest.wordList();
+        Consumer<String> c = s -> System.out.println(s);
+		c.accept("hello lambda");
     }
 
     public void testIncr() throws Exception {
