@@ -8,3 +8,5 @@ gradlew.bat
 bin/
 build/
 gradle/
+java-thread.iml
+.idea/
