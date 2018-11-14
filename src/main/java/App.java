@@ -14,7 +14,8 @@ import tio.Io;
 public class App {
 
     public static void main(String[] args) throws Exception {
-        Io.nioReadFile("/tmp/test.txt");
+        //Io.nioReadFile("/tmp/test.txt");
+        TimerDemo.exec();
     }
 
     public void time() {
