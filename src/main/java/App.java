@@ -15,8 +15,9 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         //Io.nioReadFile("/tmp/test.txt");
-        TimerDemo.task1Exec();
-        TimerDemo.task2Exec();
+        //TimerDemo.task1Exec();
+        //TimerDemo.task2Exec();
+        GenericDemo.test();
     }
 
     public void time() {
